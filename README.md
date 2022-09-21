@@ -47,7 +47,7 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
   </tr>
   <tr>
     <td>1</td>
-    <td>Performing Data Analysis</td>
+    <td>Performed Data Analysis</td>
   </tr>
   <tr>
     <td>2</td>
@@ -55,11 +55,19 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
   </tr>
    <tr>
     <td>3</td>
-    <td>Applying K-Means</td>
+    <td>Applying K-Means and Hierarchical clustering</td>
   </tr>
    <tr>
     <td>4</td>
     <td>Implementing Principal Component Analysis (PCA)</td>
+  </tr>
+ <tr>
+    <td>4</td>
+    <td>Implemented Feature Engineering</td>
+  </tr>
+   <tr>
+    <td>4</td>
+    <td>Implemented Feature Selection - Random Forest Feature Elimination and Lasso Feature Elimination</td>
   </tr>
 </table>   
 </p>
