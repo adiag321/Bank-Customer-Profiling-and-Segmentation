@@ -39,7 +39,7 @@ One of the key pain points for marketers is to know their customers and identify
 The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin2013/ccdata
 
 ## TABLE OF CONTENTS
-
+<p align = 'center'>
 <table>
   <tr>
     <th>Sr No:</th>
@@ -62,6 +62,7 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
     <td>Implementing Principal Component Analysis (PCA)</td>
   </tr>
 </table>   
+</p>
 
  https://www.analyticsvidhya.com/blog/2021/03/customer-profiling-and-segmentation-an-analytical-approach-to-business-strategy-in-retail-banking/
 
