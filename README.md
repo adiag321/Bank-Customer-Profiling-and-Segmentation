@@ -73,7 +73,11 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
 
 ## 1. PERFORMING DATA ANALYSIS
 
-![analysis]("Images/Distplot.png")
+![analysis](Images/Distplot.png)
+
+
+![analysis1](Images/Heatmap.png)
+
 
 ## 2. DATA VISUALIZATION
 
