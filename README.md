@@ -73,8 +73,11 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
 
 ## 1. PERFORMING DATA ANALYSIS
 
+A) Kernal Density Plot - 
+
 ![analysis](Images/Distplot.png)
 
+B) Heatmap - For performing Correlation analysis
 
 ![analysis1](Images/Heatmap.png)
 
