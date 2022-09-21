@@ -53,24 +53,43 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
     <td>2</td>
     <td>Data Visualization</td>
   </tr>
-   <tr>
-    <td>3</td>
-    <td>Applying K-Means and Hierarchical clustering</td>
-  </tr>
-   <tr>
-    <td>4</td>
-    <td>Implementing Principal Component Analysis (PCA)</td>
-  </tr>
  <tr>
-    <td>4</td>
-    <td>Implemented Feature Engineering</td>
+    <td>3</td>
+    <td>Feature Engineering</td>
   </tr>
    <tr>
     <td>4</td>
     <td>Implemented Feature Selection - Random Forest Feature Elimination and Lasso Feature Elimination</td>
   </tr>
+     <tr>
+    <td>5</td>
+    <td>Principal Component Analysis (PCA)</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Applying K-Means and Hierarchical clustering</td>
+  </tr>
 </table>   
 </p>
+
+## 1. PERFORMING DATA ANALYSIS
+
+
+## 2. DATA VISUALIZATION
+
+
+## 3. FEATURE ENGINEERING
+
+
+## 4. FEATURE SELECTION
+
+
+## 5. PRINCIPAL COMPONENT ANALYSIS (PCA)
+
+
+## 6. APPLYING CUSTERING TECHNIQUES - K-MEANS AND HIERARCHICAL CLUSTERING
+
+
 
  https://www.analyticsvidhya.com/blog/2021/03/customer-profiling-and-segmentation-an-analytical-approach-to-business-strategy-in-retail-banking/
 
