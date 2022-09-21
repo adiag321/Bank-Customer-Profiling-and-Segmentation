@@ -73,16 +73,67 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
 
 ## 1. PERFORMING DATA ANALYSIS
 
+So, to start with our problem, we will clean the dataset by checking for null values, handling outliers, checking for data consistency
+
+A) Describing the data
+
+![describe](Images/Describe.png)
+
+#### Insights
+
+1. Mean balance is $1564
+2. Balance frequency is frequently updated on average ~0.9
+3. Purchases average is $1000
+4. one off purchase average is ~$600
+5. Average purchases frequency is around 0.5
+6. average ONEOFF_PURCHASES_FREQUENCY, PURCHASES_INSTALLMENTS_FREQUENCY, and CASH_ADVANCE_FREQUENCY are generally low
+7. Average credit limit ~ 4500
+8. Percent of full payment is 15%
+9. Average tenure is 11 years
+
+B) Checking for missing values - 
+
+![Misisng_values](Images/missing_values_plot.png)
+
+So, we are having Missing values in `Minimum Payment` and `Credit Limit` Attribute. So, we decide to impute with `KNN Imputer` values where each sample’s missing values are imputed using the mean value from n_neighbors nearest neighbors found in the training set.
+
+C) Checked for Outliers - 
+
+![outliers](Images/Outliers.png)
+
+![Outliers_result](Images/outlier_result.png)
+
+
+D) Dropping Irrelevant Attributes - 
+
+In this step, we will drop irrelevant or Inconistent Attributes from our dataset.
+
+## 2. DATA VISUALIZATION
+
 A) Kernal Density Plot - 
 
 ![analysis](Images/Distplot.png)
+
+#### Insights
+
+1. Mean of balance is 1500 dollors
+2. 'Balance_Frequency' for most customers is updated frequently ~1
+3. For 'PURCHASES_FREQUENCY', there are two distinct group of customers
+4. For 'ONEOFF_PURCHASES_FREQUENCY' and 'PURCHASES_INSTALLMENT_FREQUENCY' most users don't do one off puchases or installment purchases frequently 
+5. Very small number of customers pay their balance in full 'PRC_FULL_PAYMENT'~0
+6. Credit limit average is around $4500
+7. Most customers are ~11 years tenure
+
 
 B) Heatmap - For performing Correlation analysis
 
 ![analysis1](Images/Heatmap.png)
 
 
-## 2. DATA VISUALIZATION
+#### Insights
+
+1. 'PURCHASES' have high correlation between one-off purchases, 'installment purchases, purchase transactions, credit limit and payments. 
+2. Strong Positive Correlation between 'PURCHASES_FREQUENCY' and 'PURCHASES_INSTALLMENT_FREQUENCY'
 
 
 ## 3. FEATURE ENGINEERING
