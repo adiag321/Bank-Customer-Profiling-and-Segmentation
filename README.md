@@ -144,10 +144,31 @@ B) Heatmap - For performing Correlation analysis
 
 ## 5. PRINCIPAL COMPONENT ANALYSIS (PCA)
 
+1. PCA is an unsupervised machine learning algorithm.
+2. PCA performs dimensionality reductions while attempting at keeping the original
+3. PCA works by trying to find a new set of features called components. 
+4. Components are composites of the uncorrelated given input features.
+
+![PCA](Images/PCA.jpeg)
+
 
 ## 6. APPLYING CUSTERING TECHNIQUES - K-MEANS AND HIERARCHICAL CLUSTERING
 
+#### 6.1 K-Means Clustering - 
 
+`K-means` is an unsupervised learning algorithm (clustering). K-means works by grouping some data points together (clustering) in an unsupervised. The algorithm groups observations with similar attribute values together by measuring the Euclidian distance between points.
+
+#### K-Means Algorithm - 
+
+1. Choose number of clusters "K"
+2. Select random K points that are going to be the centroids for each cluster
+3. Assign each data point to the nearest centroid, doing so will enable us to create "K" number of clusters
+4. Calculate a new centroid for each cluster 5. Reassign each data point to the new closest centroid
+6. Go to step 4 and repeat.
+
+![kmeans](Images/k_means.png)
+
+#### 6.2 Hierarchical Clustering - 
 
  https://www.analyticsvidhya.com/blog/2021/03/customer-profiling-and-segmentation-an-analytical-approach-to-business-strategy-in-retail-banking/
 
