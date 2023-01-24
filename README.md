@@ -12,7 +12,7 @@ One of the key pain points for marketers is to `know their customers` and `ident
 * Data includes transactions frequency, amount, tenure..etc.
 * The bank marketing team would like to leverage AI/ML to `launch a targeted marketing ad campaign` that is tailored to specific group of customers.
 * In order for this campaign to be successful, the bank has to `divide its customers into at least 3 distinctive groups`.
-* This process is known as `marketing segmentation` and it crucial for maximizing marketing campaign conversion rate.
+* This process is known as `marketing segmentation` and it crucial for `maximizing marketing campaign conversion rate`.
 
 ## TABLE OF CONTENTS
 <table>
@@ -49,7 +49,7 @@ One of the key pain points for marketers is to `know their customers` and `ident
 
 ## DATA DESCRIPTIION
 
-The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin2013/ccdata
+The data source is collected from `Kaggle` - https://www.kaggle.com/arjunbhasin2013/ccdata
 
 1. CUSTID: Identification of Credit Card holder
 2. BALANCE: Balance amount left in customer's account to make purchases
