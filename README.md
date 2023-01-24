@@ -6,6 +6,8 @@ In this case study, I am a consultant to a bank in New York City. The bank has e
 
 One of the key pain points for marketers is to `know their customers` and `identify their needs`. By understanding the customer, marketers can launch a targeted marketing campaign that is tailored for specific needs. If data about the customers is available, data science can be applied to perform market segmentation.
 
+<img width="867" alt="Problem Statement" src="https://user-images.githubusercontent.com/39597515/214297948-3f5e8cae-730f-476f-a955-ea650baf405b.png">
+
 #### What we will do - 
 
 * In this project, you have been hired as a data scientist at a bank and you have been provided with extensive data on the bank's customers for the past 6 months.
@@ -46,7 +48,6 @@ One of the key pain points for marketers is to `know their customers` and `ident
   </tr>
 </table>
 
-
 ## DATA DESCRIPTIION
 
 The data source is collected from `Kaggle` - https://www.kaggle.com/arjunbhasin2013/ccdata
@@ -70,14 +71,14 @@ The data source is collected from `Kaggle` - https://www.kaggle.com/arjunbhasin2
 17. PRC_FULL_PAYMENT: Percent of full payment paid by user
 18. TENURE: Tenure of credit card service for user
 
-
 ## 1. PERFORMING DATA ANALYSIS
 
 So, to start with our problem, we will clean the dataset by checking for null values, handling outliers, checking for data consistency
 
 A) Describing the data
 
-![describe](Images/Describe.png)
+<img width="992" alt="Describe" src="https://user-images.githubusercontent.com/39597515/214298050-83c13f0b-c21c-41c5-9053-0352c4874447.png">
+
 
 #### Insights
 
@@ -99,10 +100,7 @@ So, we are having Missing values in `Minimum Payment` and `Credit Limit` Attribu
 
 C) Checked for Outliers - 
 
-![outliers](Images/Outliers.png)
-
-![Outliers_result](Images/outlier_result.png)
-
+<img width="444" alt="outlier_result" src="https://user-images.githubusercontent.com/39597515/214298131-8c6a7675-a684-4068-b69a-59a9bc857d31.png">
 
 D) Dropping Irrelevant Attributes - 
 
@@ -112,7 +110,7 @@ In this step, we will drop irrelevant or Inconistent Attributes from our dataset
 
 A) Kernal Density Plot - 
 
-![analysis](Images/Distplot.png)
+![Distplot](https://user-images.githubusercontent.com/39597515/214298355-123d0068-0e0c-4b7f-8e13-c15c96ef18ee.png)
 
 #### Insights
 
@@ -124,23 +122,32 @@ A) Kernal Density Plot -
 6. Credit limit average is around $4500
 7. Most customers are ~11 years tenure
 
-
 B) Heatmap - For performing Correlation analysis
 
-![analysis1](Images/Heatmap.png)
-
+![Heatmap](https://user-images.githubusercontent.com/39597515/214298404-2e2d15ac-2784-4947-8872-699f31fe3b48.png)
 
 #### Insights
 
 1. 'PURCHASES' have high correlation between one-off purchases, 'installment purchases, purchase transactions, credit limit and payments. 
 2. Strong Positive Correlation between 'PURCHASES_FREQUENCY' and 'PURCHASES_INSTALLMENT_FREQUENCY'
 
-
 ## 3. FEATURE ENGINEERING
 
+We performed Feature Engineering to create new features or transform existing features that will improve the performance of the model. Here are some of the new features that were created.
+
+<img width="1264" alt="Feature_Engineering" src="https://user-images.githubusercontent.com/39597515/214296835-2e34b0bc-ad51-4cdd-8bdb-d7cbf7fc5664.png">
 
 ## 4. FEATURE SELECTION
 
+Feature selection is the process of selecting a subset of the most relevant features from a large number of features to use in a machine learning model. It is an important step in the machine learning pipeline as it can greatly impact the performance of the model.
+
+1. Recurssive feature elimination Regressor - 
+
+![RFE_importances](https://user-images.githubusercontent.com/39597515/214297262-5a24f94d-0d76-4929-892b-7eb0a8abf262.png)
+
+2. LASSO Feature Importance Regressor - 
+
+![Lasso_Feature_Imp](https://user-images.githubusercontent.com/39597515/214297527-b3845ca5-0ac3-435e-a589-11a7c741d298.png)
 
 ## 5. PRINCIPAL COMPONENT ANALYSIS (PCA)
 
@@ -151,12 +158,13 @@ B) Heatmap - For performing Correlation analysis
 
 ![PCA](Images/PCA.jpeg)
 
-
 ## 6. APPLYING CUSTERING TECHNIQUES - K-MEANS AND HIERARCHICAL CLUSTERING
 
 #### 6.1 K-Means Clustering - 
 
 `K-means` is an unsupervised learning algorithm (clustering). K-means works by grouping some data points together (clustering) in an unsupervised. The algorithm groups observations with similar attribute values together by measuring the Euclidian distance between points.
+
+![KNN_find_best_value](https://user-images.githubusercontent.com/39597515/214297904-b6650c84-1134-45b0-8a3f-a469fe4fcefb.png)
 
 #### K-Means Algorithm - 
 
@@ -170,8 +178,10 @@ B) Heatmap - For performing Correlation analysis
 
 #### 6.2 Hierarchical Clustering - 
 
- https://www.analyticsvidhya.com/blog/2021/03/customer-profiling-and-segmentation-an-analytical-approach-to-business-strategy-in-retail-banking/
+## RESOURCES
 
- https://github.com/Praneel-Rastogi/Bank-Customer-Segmentation
+https://www.analyticsvidhya.com/blog/2021/03/customer-profiling-and-segmentation-an-analytical-approach-to-business-strategy-in-retail-banking/
 
- 
+https://github.com/Praneel-Rastogi/Bank-Customer-Segmentation
+
+
