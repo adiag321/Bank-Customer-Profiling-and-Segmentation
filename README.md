@@ -1,6 +1,6 @@
 # <p align = 'center'>Bank Customer Profiling and Segmentation</p>
 
-## PROJECT OVERVIEW
+### PROJECT OVERVIEW
 
 In this case study, I am a consultant to a bank in New York City. The bank has extensive data on their customers for the past 6 months. The marketing team at the bank wants to launch a targeted ad marketing campaign by dividing their customers into at least 3 distinctive groups.
 
@@ -16,18 +16,19 @@ One of the key pain points for marketers is to `know their customers` and `ident
 * In order for this campaign to be successful, the bank has to `divide its customers into at least 3 distinctive groups`.
 * This process is known as `marketing segmentation` and it crucial for `maximizing marketing campaign conversion rate`.
 
-## TABLE OF CONTENTS
+### TABLE OF CONTENTS
 
 | Sr No |         Topic                 | 
 | ------| ----------------------------- |
 | 1.    | Data Preparation Pipeline     |
 | 2.    | Feature Engineering           |
-| 3.    | Kmeans Clustering and PCA     |
-| 4.    | Hierarchical Clustering       |
-| 5.    | Advanced Clustering           |
-| 6.    | Feature Selection             |
+| 3.    | Feature Selection             |
+| 4.    | Kmeans Clustering and PCA     |
+| 5.    | Hierarchical Clustering       |
+| 6.    | Advanced Clustering           |
+| 7.    | Key Learnings/Takeaways       |
 
-## DATA DESCRIPTIION
+### DATA DESCRIPTION
 
 The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin2013/ccdata
 
@@ -50,11 +51,11 @@ The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin201
 17. PRC_FULL_PAYMENT: Percent of full payment paid by user
 18. TENURE: Tenure of credit card service for user
 
-## 1. DATA PREPARATION PIPELINE
+### 1. DATA PREPARATION PIPELINE
 
 So, to start with our problem, we will clean the dataset by checking for null values, handling outliers, checking for data consistency
 
-#### A) Performing Data Analysis:
+**A) Performing Data Analysis:**
 Initial exploration and descriptive statistics were performed to understand key customer behavior:
 
 - Mean BALANCE is $1,564
@@ -62,17 +63,17 @@ Initial exploration and descriptive statistics were performed to understand key 
 - TENURE is typically 11 years
 - Full balance payment rate (PRC_FULL_PAYMENT) is low (~15%)
 
-Outliers:
+**Outliers:**
 - One customer made a one-off purchase of $40,761
 - Another had a cash advance of $47,137
 
-#### B) Data Visualization:
+**B) Data Visualization:**
 
-#### Missing Values:
+**Missing Values:**
 - Handled missing values in `MINIMUM_PAYMENTS` and `CREDIT_LIMIT` using **mean imputation**
 - Saved a heatmap of null values: `Images/missing_values_plot.png`
 
-#### Distribution Plots:
+**Distribution Plots:**
 - Used `distplot` and KDE to visualize distributions of all features
 - Saved figure as: `Images/Distplot.png`
 
@@ -81,20 +82,20 @@ Outliers:
 - Two distinct customer groups in `PURCHASES_FREQUENCY`
 - Most customers rarely use one-off or installment purchase options
 
-#### Correlation Heatmap:
+**Correlation Heatmap:**
 - Created heatmap to examine feature correlations
 - Found strong positive correlation between:
   - `PURCHASES`, `ONEOFF_PURCHASES`, and `INSTALLMENT_PURCHASES`
   - `PURCHASES_FREQUENCY` and `PURCHASES_INSTALLMENT_FREQUENCY`
 
-#### C) Data Cleaning:
+**C) Data Cleaning:**
 
 - Dropped irrelevant column: `CUST_ID`
 - Checked for and removed missing or duplicated data
 - Scaled all features using **StandardScaler**
 - Normalized data for improved K-Means performance
 
-## 2. FEATURE ENGINEERING
+### 2. FEATURE ENGINEERING
 
 We performed Feature Engineering to create new features or transform existing features that will improve the performance of the model. Here are some of the new features that were created.
 
@@ -113,20 +114,31 @@ We performed Feature Engineering to create new features or transform existing fe
 
 <img alt="Feature_Engineering" src="https://github.com/adiag321/Bank-Customer-Profiling-and-Segmentation/blob/main/Images/Feature_Engineering.png?raw=true">
 
+### 3. FEATURE SELECTION
 
-## 3. APPLYING CUSTERING TECHNIQUES - K-MEANS AND PRINCIPLE COMPONENT ANALYSIS (PCA)
+Feature selection is the process of selecting a subset of the most relevant features from a large number of features to use in a machine learning model. It is an important step in the machine learning pipeline as it can greatly impact the performance of the model.
 
-### 3.1 K-Means Clustering:
+**1. Recurssive feature elimination Regressor -**
+
+![RFE_importances](https://user-images.githubusercontent.com/39597515/214297262-5a24f94d-0d76-4929-892b-7eb0a8abf262.png)
+
+**2. LASSO Feature Importance Regressor -**
+
+![Lasso_Feature_Imp](https://user-images.githubusercontent.com/39597515/214297527-b3845ca5-0ac3-435e-a589-11a7c741d298.png)
+
+### 4. APPLYING CUSTERING TECHNIQUES - K-MEANS AND PRINCIPLE COMPONENT ANALYSIS (PCA)
+
+#### 4.1 K-Means Clustering:
 `K-means` is an unsupervised learning algorithm (clustering). K-means works by grouping some data points together (clustering) in an unsupervised. The algorithm groups observations with similar attribute values together by measuring the Euclidian distance between points.
 
-#### K-Means Algorithm:
+**K-Means Algorithm:**
 1. Choose number of clusters "K"
 2. Select random K points that are going to be the centroids for each cluster
 3. Assign each data point to the nearest centroid, doing so will enable us to create "K" number of clusters
 4. Calculate a new centroid for each cluster 5. Reassign each data point to the new closest centroid
 6. Go to step 4 and repeat.
 
-#### `Evaluation Metrics:`
+**Evaluation Metrics:**
 | Metric                           | Meaning                                                                                   |
 | -------------------------------- | ----------------------------------------------------------------------------------------- |
 | **Silhouette Score**             | Measures how well clusters are separated. Ranges from -1 to 1. **Higher = better**        |
@@ -134,17 +146,17 @@ We performed Feature Engineering to create new features or transform existing fe
 | **ARI (Adjusted Rand Index)**    | Measures similarity between true labels and predicted clusters. **Higher = better**       |
 | **NMI (Normalized Mutual Info)** | Measures how much info is shared between true and predicted clusters. **Higher = better** |
 
-#### Implementation Highlights:
+**Implementation Highlights:**
 * Feature scaling using StandardScaler for normalization
 * Elbow method to identify optimal k
 * Applied KMeans on the original scaled dataset
 * Cluster labels appended to the original data
 * Interpretation of each cluster based on customer behavior
 
-### 3.2 PCA + K-Means Clustering
+**4.2 PCA + K-Means Clustering**
 We also applied Principal Component Analysis (PCA) to reduce dimensionality and then re-ran K-Means for improved performance and interpretability.
 
-#### PCA Highlights:
+**PCA Highlights:**
 
 ![PCA](Images/PCA.jpeg)
 
@@ -152,46 +164,43 @@ We also applied Principal Component Analysis (PCA) to reduce dimensionality and 
 * PCA with 3 components used for visualization and low-dimension clustering
 * Cluster labels generated on PCA-transformed data
 
-#### Cluster Comparison:
+**Cluster Comparison:**
 * Adjusted Rand Index (ARI): Measures similarity between clustering results
 * Normalized Mutual Information (NMI): Measures shared information
 
-| Approach                         | Silhouette | Inertia      | ARI   | NMI   |
-| -------------------------------- | ---------- | ------------ | ----- | ----- |
-| Original Cluster                 | 0.144      | 164317.94    | —     | —     |
-| Cluster with PCA (14 components) | 0.165      | 143962.95    | 0.974 | 0.948 |
-| Cluster with PCA (3 components)  | **0.332**  | **43974.51** | 0.243 | 0.382 |
+| Approach | Silhouette | Inertia | ARI | NMI |
+| ------------------ | ---------- | --------- | ----- | ----- |
+| **Original** | 0.171 | 125665.82 | — | — |
+| **PCA (14 comps)** | 0.183 | 105474.41 | 0.569 | 0.687 |
+| **PCA (3 comps)** | 0.289 | 25465.82 | 0.338 | 0.456 |
 
-#### Recommendation:
-* PCA with 3 components gives the best clustering performance (highest Silhouette, lowest Inertia).
-* Use PCA (14 components) if aligning with original clusters is a priority (highest ARI/NMI).
-* Final cluster labels (original + PCA-based) are saved with the unscaled dataset for downstream analysis.
+1. Silhouette Score:
+* Best is PCA (3 components) → 0.289
+* Higher Silhouette means better separation and cohesion.
+
+2. Inertia:
+* Lowest (i.e., best) again for PCA (3 components) → 25,465.82
+* Indicates tighter clusters.
+
+3. ARI & NMI:
+* PCA (3) captures compact clusters, but loses alignment with the original label structure. (ARI = 0.338, NMI = 0.456)
+* PCA (14) preserves more meaningful information for matching true labels. (ARI = 0.569, NMI = 0.687)
+
+**Recommendation:**
+
+Based on evaluation metrics, clustering using PCA with 3 components is optimal. It significantly improves Silhouette Score and Inertia, while still maintaining a `decent` match with original clusters (via ARI/NMI). This suggests PCA with 3 components enhances clustering performance and interpretability.
+
+## 5. HIERARCHICAL CLUSTERING
 
 
-## 4. HIERARCHICAL CLUSTERING
-
-
-## 5. ADVANCED CLUSTERING
-
-## 6. FEATURE SELECTION
-
-Feature selection is the process of selecting a subset of the most relevant features from a large number of features to use in a machine learning model. It is an important step in the machine learning pipeline as it can greatly impact the performance of the model.
-
-#### 1. Recurssive feature elimination Regressor - 
-
-![RFE_importances](https://user-images.githubusercontent.com/39597515/214297262-5a24f94d-0d76-4929-892b-7eb0a8abf262.png)
-
-#### 2. LASSO Feature Importance Regressor - 
-
-![Lasso_Feature_Imp](https://user-images.githubusercontent.com/39597515/214297527-b3845ca5-0ac3-435e-a589-11a7c741d298.png)
-
+## 6. ADVANCED CLUSTERING
 
 ## RESOURCES
 
 https://www.analyticsvidhya.com/blog/2021/03/customer-profiling-and-segmentation-an-analytical-approach-to-business-strategy-in-retail-banking/
 
 
-## KEY LEARNINGS
+### 7. KEY LEARNINGS/TAKEAWAYS
 
 * **Dimensionality Reduction via PCA** significantly improved clustering performance:
   * Reduced noise and redundancy from high-dimensional data.
