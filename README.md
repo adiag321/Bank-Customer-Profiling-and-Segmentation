@@ -17,40 +17,19 @@ One of the key pain points for marketers is to `know their customers` and `ident
 * This process is known as `marketing segmentation` and it crucial for `maximizing marketing campaign conversion rate`.
 
 ## TABLE OF CONTENTS
-<table>
-  <tr>
-    <th>Sr No:</th>
-    <th>Topic</th>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>Performed Data Analysis</td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td>Data Visualization</td>
-  </tr>
- <tr>
-    <td>3</td>
-    <td>Feature Engineering</td>
-  </tr>
-   <tr>
-    <td>4</td>
-    <td>Implemented Feature Selection - Random Forest Feature Elimination and Lasso Feature Elimination</td>
-  </tr>
-     <tr>
-    <td>5</td>
-    <td>Principal Component Analysis (PCA)</td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td>Applying K-Means and Hierarchical clustering</td>
-  </tr>
-</table>
+
+| Sr No |         Topic                 | 
+| ------| ----------------------------- |
+| 1.    | Data Preparation Pipeline     |
+| 2.    | Feature Engineering           |
+| 3.    | Kmeans Clustering and PCA     |
+| 4.    | Hierarchical Clustering       |
+| 5.    | Advanced Clustering           |
+| 6.    | Feature Selection             |
 
 ## DATA DESCRIPTIION
 
-The data source is collected from `Kaggle` - https://www.kaggle.com/arjunbhasin2013/ccdata
+The data source is collected from Kaggle - https://www.kaggle.com/arjunbhasin2013/ccdata
 
 1. CUSTID: Identification of Credit Card holder
 2. BALANCE: Balance amount left in customer's account to make purchases
@@ -71,117 +50,164 @@ The data source is collected from `Kaggle` - https://www.kaggle.com/arjunbhasin2
 17. PRC_FULL_PAYMENT: Percent of full payment paid by user
 18. TENURE: Tenure of credit card service for user
 
-## 1. PERFORMING DATA ANALYSIS
+## 1. DATA PREPARATION PIPELINE
 
 So, to start with our problem, we will clean the dataset by checking for null values, handling outliers, checking for data consistency
 
-A) Describing the data
+#### A) Performing Data Analysis:
+Initial exploration and descriptive statistics were performed to understand key customer behavior:
 
-<img width="992" alt="Describe" src="https://user-images.githubusercontent.com/39597515/214298050-83c13f0b-c21c-41c5-9053-0352c4874447.png">
+- Mean BALANCE is $1,564
+- Avg. PURCHASES ~ 1,000, with ONEOFF_PURCHASES averaging $600
+- TENURE is typically 11 years
+- Full balance payment rate (PRC_FULL_PAYMENT) is low (~15%)
 
+Outliers:
+- One customer made a one-off purchase of $40,761
+- Another had a cash advance of $47,137
 
-#### Insights
+#### B) Data Visualization:
 
-1. Mean balance is $1564
-2. Balance frequency is frequently updated on average ~0.9
-3. Purchases average is $1000
-4. one off purchase average is ~$600
-5. Average purchases frequency is around 0.5
-6. average ONEOFF_PURCHASES_FREQUENCY, PURCHASES_INSTALLMENTS_FREQUENCY, and CASH_ADVANCE_FREQUENCY are generally low
-7. Average credit limit ~ 4500
-8. Percent of full payment is 15%
-9. Average tenure is 11 years
+#### Missing Values:
+- Handled missing values in `MINIMUM_PAYMENTS` and `CREDIT_LIMIT` using **mean imputation**
+- Saved a heatmap of null values: `Images/missing_values_plot.png`
 
-B) Checking for missing values - 
+#### Distribution Plots:
+- Used `distplot` and KDE to visualize distributions of all features
+- Saved figure as: `Images/Distplot.png`
 
-![Misisng_values](Images/missing_values_plot.png)
+**Insights:**
+- `BALANCE_FREQUENCY` ~1 (frequent updates)
+- Two distinct customer groups in `PURCHASES_FREQUENCY`
+- Most customers rarely use one-off or installment purchase options
 
-So, we are having Missing values in `Minimum Payment` and `Credit Limit` Attribute. So, we decide to impute with `KNN Imputer` values where each sample’s missing values are imputed using the mean value from n_neighbors nearest neighbors found in the training set.
+#### Correlation Heatmap:
+- Created heatmap to examine feature correlations
+- Found strong positive correlation between:
+  - `PURCHASES`, `ONEOFF_PURCHASES`, and `INSTALLMENT_PURCHASES`
+  - `PURCHASES_FREQUENCY` and `PURCHASES_INSTALLMENT_FREQUENCY`
 
-C) Checked for Outliers - 
+#### C) Data Cleaning:
 
-<img width="444" alt="outlier_result" src="https://user-images.githubusercontent.com/39597515/214298131-8c6a7675-a684-4068-b69a-59a9bc857d31.png">
+- Dropped irrelevant column: `CUST_ID`
+- Checked for and removed missing or duplicated data
+- Scaled all features using **StandardScaler**
+- Normalized data for improved K-Means performance
 
-D) Dropping Irrelevant Attributes - 
-
-In this step, we will drop irrelevant or Inconistent Attributes from our dataset.
-
-## 2. DATA VISUALIZATION
-
-A) Kernal Density Plot - 
-
-![Distplot](https://user-images.githubusercontent.com/39597515/214298355-123d0068-0e0c-4b7f-8e13-c15c96ef18ee.png)
-
-#### Insights
-
-1. Mean of balance is 1500 dollors
-2. 'Balance_Frequency' for most customers is updated frequently ~1
-3. For 'PURCHASES_FREQUENCY', there are two distinct group of customers
-4. For 'ONEOFF_PURCHASES_FREQUENCY' and 'PURCHASES_INSTALLMENT_FREQUENCY' most users don't do one off puchases or installment purchases frequently 
-5. Very small number of customers pay their balance in full 'PRC_FULL_PAYMENT'~0
-6. Credit limit average is around $4500
-7. Most customers are ~11 years tenure
-
-B) Heatmap - For performing Correlation analysis
-
-![Heatmap](https://user-images.githubusercontent.com/39597515/214298404-2e2d15ac-2784-4947-8872-699f31fe3b48.png)
-
-#### Insights
-
-1. 'PURCHASES' have high correlation between one-off purchases, 'installment purchases, purchase transactions, credit limit and payments. 
-2. Strong Positive Correlation between 'PURCHASES_FREQUENCY' and 'PURCHASES_INSTALLMENT_FREQUENCY'
-
-## 3. FEATURE ENGINEERING
+## 2. FEATURE ENGINEERING
 
 We performed Feature Engineering to create new features or transform existing features that will improve the performance of the model. Here are some of the new features that were created.
 
-<img width="1264" alt="Feature_Engineering" src="https://user-images.githubusercontent.com/39597515/214296835-2e34b0bc-ad51-4cdd-8bdb-d7cbf7fc5664.png">
+| New Feature                  | Description                                                        |
+| ---------------------------- | ------------------------------------------------------------------ |
+| `BALANCE_USAGE_RATIO`        | Proportion of balance used vs credit limit                         |
+| `ONEOFF_PURCHASE_RATIO`      | Proportion of one-off purchases out of total purchases             |
+| `INSTALLMENT_PURCHASE_RATIO` | Proportion of installment purchases out of total purchases         |
+| `TOTAL_PURCHASES`            | Sum of one-off and installment purchases (can replace `PURCHASES`) |
+| `PURCHASES_PER_TRX`          | Average amount per purchase transaction                            |
+| `CASH_ADVANCE_PER_TRX`       | Average amount per cash advance transaction                        |
+| `PAYMENT_RATIO`              | Ratio of total payments to credit limit                            |
+| `MINIMUM_PAYMENT_RATIO`      | Ratio of minimum payment to credit limit                           |
+| `FULL_PAYMENT_FLAG`          | 1 if user always makes full payments, 0 otherwise                  |
+| `UTILIZATION_RATIO`          | Ratio of total spent (purchases + cash advance) to credit limit    |
 
-## 4. FEATURE SELECTION
+<img alt="Feature_Engineering" src="https://github.com/adiag321/Bank-Customer-Profiling-and-Segmentation/blob/main/Images/Feature_Engineering.png?raw=true">
 
-Feature selection is the process of selecting a subset of the most relevant features from a large number of features to use in a machine learning model. It is an important step in the machine learning pipeline as it can greatly impact the performance of the model.
 
-1. Recurssive feature elimination Regressor - 
+## 3. APPLYING CUSTERING TECHNIQUES - K-MEANS AND PRINCIPLE COMPONENT ANALYSIS (PCA)
 
-![RFE_importances](https://user-images.githubusercontent.com/39597515/214297262-5a24f94d-0d76-4929-892b-7eb0a8abf262.png)
-
-2. LASSO Feature Importance Regressor - 
-
-![Lasso_Feature_Imp](https://user-images.githubusercontent.com/39597515/214297527-b3845ca5-0ac3-435e-a589-11a7c741d298.png)
-
-## 5. PRINCIPAL COMPONENT ANALYSIS (PCA)
-
-1. PCA is an unsupervised machine learning algorithm.
-2. PCA performs dimensionality reductions while attempting at keeping the original
-3. PCA works by trying to find a new set of features called components. 
-4. Components are composites of the uncorrelated given input features.
-
-![PCA](Images/PCA.jpeg)
-
-## 6. APPLYING CUSTERING TECHNIQUES - K-MEANS AND HIERARCHICAL CLUSTERING
-
-#### 6.1 K-Means Clustering - 
-
+### 3.1 K-Means Clustering:
 `K-means` is an unsupervised learning algorithm (clustering). K-means works by grouping some data points together (clustering) in an unsupervised. The algorithm groups observations with similar attribute values together by measuring the Euclidian distance between points.
 
-![KNN_find_best_value](https://user-images.githubusercontent.com/39597515/214297904-b6650c84-1134-45b0-8a3f-a469fe4fcefb.png)
-
-#### K-Means Algorithm - 
-
+#### K-Means Algorithm:
 1. Choose number of clusters "K"
 2. Select random K points that are going to be the centroids for each cluster
 3. Assign each data point to the nearest centroid, doing so will enable us to create "K" number of clusters
 4. Calculate a new centroid for each cluster 5. Reassign each data point to the new closest centroid
 6. Go to step 4 and repeat.
 
-![kmeans](Images/k_means.png)
+#### `Evaluation Metrics:`
+| Metric                           | Meaning                                                                                   |
+| -------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Silhouette Score**             | Measures how well clusters are separated. Ranges from -1 to 1. **Higher = better**        |
+| **Inertia**                      | Sum of squared distances to cluster centers. **Lower = better**                           |
+| **ARI (Adjusted Rand Index)**    | Measures similarity between true labels and predicted clusters. **Higher = better**       |
+| **NMI (Normalized Mutual Info)** | Measures how much info is shared between true and predicted clusters. **Higher = better** |
 
-#### 6.2 Hierarchical Clustering - 
+#### Implementation Highlights:
+* Feature scaling using StandardScaler for normalization
+* Elbow method to identify optimal k
+* Applied KMeans on the original scaled dataset
+* Cluster labels appended to the original data
+* Interpretation of each cluster based on customer behavior
+
+### 3.2 PCA + K-Means Clustering
+We also applied Principal Component Analysis (PCA) to reduce dimensionality and then re-ran K-Means for improved performance and interpretability.
+
+#### PCA Highlights:
+
+![PCA](Images/PCA.jpeg)
+
+* PCA with 14 components retained > 90% of variance
+* PCA with 3 components used for visualization and low-dimension clustering
+* Cluster labels generated on PCA-transformed data
+
+#### Cluster Comparison:
+* Adjusted Rand Index (ARI): Measures similarity between clustering results
+* Normalized Mutual Information (NMI): Measures shared information
+
+| Approach                         | Silhouette | Inertia      | ARI   | NMI   |
+| -------------------------------- | ---------- | ------------ | ----- | ----- |
+| Original Cluster                 | 0.144      | 164317.94    | —     | —     |
+| Cluster with PCA (14 components) | 0.165      | 143962.95    | 0.974 | 0.948 |
+| Cluster with PCA (3 components)  | **0.332**  | **43974.51** | 0.243 | 0.382 |
+
+#### Recommendation:
+* PCA with 3 components gives the best clustering performance (highest Silhouette, lowest Inertia).
+* Use PCA (14 components) if aligning with original clusters is a priority (highest ARI/NMI).
+* Final cluster labels (original + PCA-based) are saved with the unscaled dataset for downstream analysis.
+
+
+## 4. HIERARCHICAL CLUSTERING
+
+
+## 5. ADVANCED CLUSTERING
+
+## 6. FEATURE SELECTION
+
+Feature selection is the process of selecting a subset of the most relevant features from a large number of features to use in a machine learning model. It is an important step in the machine learning pipeline as it can greatly impact the performance of the model.
+
+#### 1. Recurssive feature elimination Regressor - 
+
+![RFE_importances](https://user-images.githubusercontent.com/39597515/214297262-5a24f94d-0d76-4929-892b-7eb0a8abf262.png)
+
+#### 2. LASSO Feature Importance Regressor - 
+
+![Lasso_Feature_Imp](https://user-images.githubusercontent.com/39597515/214297527-b3845ca5-0ac3-435e-a589-11a7c741d298.png)
+
 
 ## RESOURCES
 
 https://www.analyticsvidhya.com/blog/2021/03/customer-profiling-and-segmentation-an-analytical-approach-to-business-strategy-in-retail-banking/
 
-https://github.com/Praneel-Rastogi/Bank-Customer-Segmentation
+
+## KEY LEARNINGS
+
+* **Dimensionality Reduction via PCA** significantly improved clustering performance:
+  * Reduced noise and redundancy from high-dimensional data.
+  * Made clusters more separable, especially with 3 principal components.
+
+* **Silhouette Score** emerged as the most important metric in this unsupervised context:
+  * Even though PCA with 3 components captured less variance, it achieved the **highest silhouette score (0.332)** and **lowest inertia**, indicating **well-separated and tight clusters**.
+  * **Goal was to create meaningful clusters**, not necessarily preserve all data variance.
+
+* Learned about and applied **ARI (Adjusted Rand Index)** and **NMI (Normalized Mutual Information)**:
+  * Helped measure how well PCA-based clusters aligned with the original KMeans clusters.
+  * **High ARI/NMI for PCA with 14 components** showed better alignment with original labels, but not better clustering quality.
+
+* **PCA with fewer components (3)** can still yield better clustering if the objective is natural separation rather than label alignment.
+
+* The **final recommendation** to use PCA with 3 components was based on a tradeoff: better clustering quality (Silhouette) vs. perfect label preservation (ARI/NMI).
+
 
 
